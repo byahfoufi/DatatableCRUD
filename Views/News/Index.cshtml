@@ -1,0 +1,40 @@
+﻿<div id="newsFilterContainer">
+    <!-- Render the filter section using the NewsFilter model -->
+    @await Component.InvokeAsync("NewsFilterComponent", Model)
+</div>
+<div id="newsTableContainer">
+    <!-- This is where the table section will be loaded -->
+</div>
+
+@section Scripts {
+    <script>
+        // Define the loadPage function to load news table with the specified page index
+        function loadPage(pageIndex) {
+            var categoryId = $('#SelectedCategoryId').val();
+            $('#newsTableContainer').load('@Url.Action("GetNewsTable", "News")', { SelectedCategoryId: categoryId, pageIndex: pageIndex });
+        }
+
+
+        // Define the filterNews function to load news table when filter changes
+        function filterNews() {
+            var categoryId = $('#SelectedCategoryId').val();
+            // Load the news table with the selected category ID
+            $('#newsTableContainer').load('@Url.Action("GetNewsTable", "News")', { SelectedCategoryId: categoryId });
+        }
+
+        // Function to load all news when the page is first loaded
+        function loadAllNews() {
+            // Load the news table without any filters
+            $('#newsTableContainer').load('@Url.Action("GetNewsTable", "News")');
+        }
+
+        // Execute the following code when the DOM is fully loaded
+        $(document).ready(function () {
+            // Attach the filterNews function to the onchange event of the select element
+            $('#SelectedCategoryId').change(filterNews);
+
+            // Load all news when the page is first loaded
+            loadAllNews();
+        });
+    </script>
+}

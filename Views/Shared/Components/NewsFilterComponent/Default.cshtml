@@ -1,0 +1,5 @@
+﻿@model DatatableCRUD.Models.NewsFilterModel
+
+<div id="filterControls">
+    Category: @Html.DropDownListFor(m => m.SelectedCategoryId, new SelectList(Model.Categories, "CategoryId", "Name"), "All", new { @class = "form-control", onchange = "filterNews()" })
+</div>

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DatatableCRUD.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h2>Employee List</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table id="employeeTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.EmployeeId</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.Email</td>
+                <td>@employee.Username</td>
+                <td>@employee.Password</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@employee.EmployeeId" class="editBtn">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@employee.EmployeeId" class="deleteBtn">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+<script src="//code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#employeeTable').DataTable();
+    });
+</script>

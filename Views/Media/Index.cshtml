@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DatatableCRUD.Models.MediaItem>
+
+<h2>Media Library</h2>
+<p><a asp-action="Create">Upload New Item</a></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Preview/Link</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.MediaType</td>
+                <td>
+                    @if (item.MediaType == MediaType.YouTube)
+                    { 
+                        @if (!string.IsNullOrEmpty(item.Link))
+                        {
+                            <iframe src="@item.Link" width="300" height="200"></iframe>
+                        }
+                        else
+                        {
+                            <span>YouTube Link Unavailable</span>
+                        }
+                    }
+                    else if (item.MediaType == MediaType.Image || item.MediaType == MediaType.File)
+                    {
+                        @if (!string.IsNullOrEmpty(item.FileName))
+                        {
+                            if (item.MediaType == MediaType.Image)
+                            {
+                                <img src="~/uploads/@item.FileName" alt="@item.Title" width="300" />
+                            }
+                            else
+                            {
+                                <a href="~/uploads/@item.FileName" download="@item.FileName">Download File (@item.Title)</a>
+                            }
+                        }
+                        else
+                        {
+                            <span>No File Uploaded</span>
+                        }
+                    }
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

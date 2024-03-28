@@ -1,0 +1,61 @@
+﻿@model DatatableCRUD.Models.News
+
+@{
+    ViewData["Title"] = "Edit News";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea id="Description" asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoriesList"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+  @*   <div class="form-group">
+        <label asp-for="MediaItemId"></label>
+        <select asp-for="MediaItemId" class="form-control" asp-items="ViewBag.MediaItemId"></select>
+        <span asp-validation-for="MediaItemId" class="text-danger"></span>
+    </div> *@
+
+    @* <div class="form-group">
+        <label asp-for="TagsDisplay">Tags</label>
+        <input asp-for="TagsDisplay" class="form-control" />
+        <span asp-validation-for="TagsDisplay" class="text-danger"></span>
+        <small id="tagHelp" class="form-text text-muted">Separate tags with commas</small>
+    </div> *@
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.tiny.cloud/1/7q6avadsdj2a9oarf1s83o8d81wxpsy8g13lji11m68x6647/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#Description',
+        });
+    </script>
+}

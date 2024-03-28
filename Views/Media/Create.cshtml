@@ -1,0 +1,67 @@
+﻿@model DatatableCRUD.Models.MediaItem
+
+<h2>Upload New Item</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MediaType" class="control-label"></label>
+        <select asp-for="MediaType" class="form-control">
+            @foreach (MediaType mediaType in Enum.GetValues(typeof(MediaType)))
+            {
+                <option value="@mediaType">@mediaType</option>
+            }
+        </select>
+    </div>
+
+    <div id="uploadInput">
+        <label class="control-label">Upload File</label>
+        <input type="file" name="file" class="form-control" accept="image/png, image/jpeg, application/pdf" />
+    </div>
+
+    <div class="form-group" id="linkInput" style="display: none">
+        <label asp-for="Link" class="control-label">YouTube Link</label>
+        <input asp-for="Link" class="form-control" />
+        <span asp-validation-for="Link" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Upload" class="btn btn-primary" />
+    </div>
+</form>
+
+<script>
+    const mediaTypeSelect = document.getElementById("MediaType");
+    const uploadInput = document.getElementById("uploadInput");
+    const linkInput = document.getElementById("linkInput");
+
+    function toggleVisibility() {
+        const selectedMediaType = mediaTypeSelect.value;
+
+        if (selectedMediaType === "YouTube") {
+            uploadInput.style.display = "none";
+            linkInput.style.display = "block";
+        } else { // Covers both "Image" and "File"
+            uploadInput.style.display = "block";
+            linkInput.style.display = "none";
+        }
+    }
+
+    mediaTypeSelect.addEventListener('change', toggleVisibility);
+
+    // Initial call to set field visibility on page load
+    toggleVisibility();
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
